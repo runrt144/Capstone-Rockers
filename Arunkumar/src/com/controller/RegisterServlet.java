@@ -16,6 +16,7 @@ public class RegisterServlet extends HttpServlet {
             throws ServletException, IOException {
 	 response.setContentType("text/html;charset=UTF-8");
 	 PrintWriter out = response.getWriter();
+	 String id = request.getParameter("id");
 	 String firstName = request.getParameter("firstName");
 	 String lastName = request.getParameter("lastName");
 	 String email = request.getParameter("email");
@@ -24,8 +25,8 @@ public class RegisterServlet extends HttpServlet {
 	 String gender = request.getParameter("gender");
 	 String zip = request.getParameter("zip");
 	 String phone_no = request.getParameter("phone_no");
-	 User user = new User(firstName,lastName, email, password,confirm_password,gender,zip,phone_no);
-			
+	 User user = new User( id, firstName,lastName, email, password,confirm_password,gender,zip,phone_no);
+	 		
 	 try {	
 		 RegisterService registerService = new RegisterService();
 		 boolean result = registerService.register(user);		

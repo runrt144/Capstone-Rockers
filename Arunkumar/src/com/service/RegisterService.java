@@ -6,21 +6,23 @@ import org.hibernate.Transaction;
 
 import com.hibernate.util.HibernateUtil;
 import com.model.User;
+
 public class RegisterService {
 	
 public boolean register(User user){
 	 Session session = HibernateUtil.openSession();
 	 if(isUserExists(user)) return false;	
 	
-	 Transaction tx = null;	
+	 Transaction transaction = null;	
 	 try {
-		 tx = session.getTransaction();
-		 tx.begin();
-		 session.saveOrUpdate(user);		
-		 tx.commit();
+		 transaction = session.getTransaction();
+		 transaction.begin();
+		 session.save(user);
+		 //session.saveOrUpdate(user);		
+		 transaction.commit();
 	 } catch (Exception e) {
-		 if (tx != null) {
-			 tx.rollback();
+		 if (transaction != null) {
+			 transaction.rollback();
 		 }
 		 e.printStackTrace();
 	 } finally {

@@ -27,7 +27,7 @@ public class LoginService {
         try {
             tx = session.getTransaction();
             tx.begin();
-            Query query = session.createQuery("from registration where email='"+email+"'");
+            Query query = session.createQuery("from User where email='"+email+"'");
             user = (User)query.uniqueResult();
             tx.commit();
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class LoginService {
         try {
             tx = session.getTransaction();
             tx.begin();
-            list = session.createQuery("from User").list();                        
+            list = session.createQuery("from registration").list();                        
             tx.commit();
         } catch (Exception e) {
             if (tx != null) {

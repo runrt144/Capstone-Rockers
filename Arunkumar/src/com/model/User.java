@@ -8,9 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="registration")
+@Table(name="capstone.registration")
 public class User implements Serializable {
 	@Id @GeneratedValue
+	private String id;
     private String firstName;
     private String lastName;
     private String email;
@@ -143,8 +144,9 @@ public class User implements Serializable {
 	 * @param zip
 	 * @param phonenumber
 	 */
-	public User(String firstName, String lastName, String email, String password, String confirmpassword, String gender, String zip,
+	public User(String id, String firstName, String lastName, String email, String password, String confirm_password, String gender, String zip,
 			String phone_no) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -153,5 +155,19 @@ public class User implements Serializable {
 		this.gender = gender;
 		this.zip = zip;
 		this.phone_no = phone_no;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
 	}
 }
