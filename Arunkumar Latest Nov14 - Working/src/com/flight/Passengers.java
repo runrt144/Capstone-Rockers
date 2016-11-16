@@ -1,5 +1,9 @@
 package com.flight;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+
 public class Passengers
 {
     private String adultCount;

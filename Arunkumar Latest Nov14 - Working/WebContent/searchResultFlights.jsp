@@ -17,8 +17,20 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>SearchFlights</title>
 <style>
+body {
+	margin-left: 50px; 
+	background-color: lightblue;
+	-background: url("images/h5.jpg") no-repeat center center fixed; -
+	-background-size: cover;
+	color: black;
+	font-weight: bold;
+	font-size: 100%;
+	font-variant: small-caps;
+	font-family: 'FranchiseRegular', 'Arial Narrow', Arial, sans-serif;
+}
+
 table, th, td {
-	border: 1px solid blue;
+	border: 1px solid black;
 	border-collapse: collapse;
 }
 
@@ -29,62 +41,98 @@ th, td {
 th {
 	text-align: left;
 }
+
+input {
+	background-color: brown;
+	color: white;
+	padding: 7px 40px 7px 40px;
+	border-radius: 5px;
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2
+}
 </style>
 </head>
 
 <body>
-
-	<form align="left" class="book" method="post"  action="BookServlet">
-	<input type="hidden" name="bookingInfo" id="bookingInfo" />
-	<table style="width: 80%">
-		<c:forEach items="${flightSearchResults.trips.tripOption}" var="tripOption" varStatus="loop">
-			
-					<c:set var="tripopt" value="" />
-					<c:forEach items="${tripOption.slice}" var="slice" varStatus="loop">
-					 <c:forEach items="${slice.segment}" var="segment" varStatus="loop">
-					 <tr>
-					 <c:forEach items="${flightSearchResults.trips.data.carrier}" var="carrier" varStatus="loop">
-						<c:if test="${carrier.code == segment.flight.carrier }">
-							<td><c:out value="${carrier.name}" /></td>
-							<c:set var="tripopt" value="${tripopt },${carrier.name }" />
-						</c:if> 
-					 </c:forEach>
-						<td><c:out value="${segment.flight.number}" /></td>
-						<c:set var="tripopt" value="${tripopt},${segment.flight.number}" />
-						<c:forEach items="${segment.leg}" var="leg" varStatus="loop">
-							<td><c:out value="${leg.origin}" /></td>
-							<td><c:out value="${leg.destination}" /></td>
-							<td><c:out value="${leg.departureTime}" /></td>
-							<td><c:out value="${leg.arrivalTime}" /></td>
-							<c:set var="tripopt" value="${tripopt},${leg.origin},${leg.destination },${leg.departureTime },${leg.arrivalTime }" />
-						</c:forEach>
-						
-						<td><c:out value="${segment.duration}" /></td>
-						<c:set var="tripopt" value="${tripopt},${segment.duration }" />
-						</tr>
-						
-					 </c:forEach>
-					</c:forEach>
-					<tr>
-			<c:forEach items="${tripOption.pricing}" var="pricing1" varStatus="loop">
-					<td><c:out value="${pricing1.saleFareTotal}" /></td>
-					<td><c:out value="${pricing1.saleTaxTotal}" /></td>
-					<td><c:out value="${pricing1.saleTotal}" /></td>
-			</c:forEach>
-			
-			<td colspan="4" style="text-align: center;backgroud-color:blue; color:white" >
-			<script type="text/javascript">
-				
-				function setBookingInfo(bookingInfo){alert(bookingInfo);
-					
-					document.getElementById('bookingInfo').value = (bookingInfo);
-				}
-			</script> 
-			
-			<input onclick="setBookingInfo('<c:out value='${tripopt}' />');" class="search" type="submit" value="Book"/></td>
+	<div align="center">
+		<br> <img src="images/head1.jpg" alt=" " height="60" width="100%"
+			align="middle" />
+	</div>
+	<br>
+	<h1><u>Search Flight Results</u></h1>
+	<form align="left" class="book" method="post" action="bookingContact.html">
+		<input type="hidden" name="bookingInfo" id="bookingInfo" />
+		<table style="width: 100%">
+			<tr>
+				<td>Flight Carrier</td>
+				<td>Flight Number</td>
+				<td>Origin</td>
+				<td>Destination</td>
+				<td>Departure Date</td>
+				<td>Arrival Date</td>
+				<td>Travel Time</td>
 			</tr>
-		</c:forEach>
-	</table>
+			<c:forEach items="${flightSearchResults.trips.tripOption}"
+				var="tripOption" varStatus="loop">
+
+				<c:set var="tripopt" value="" />
+				<c:forEach items="${tripOption.slice}" var="slice" varStatus="loop">
+
+					<c:forEach items="${slice.segment}" var="segment" varStatus="loop">
+						<tr>
+							<c:forEach items="${flightSearchResults.trips.data.carrier}"
+								var="carrier" varStatus="loop">
+								<c:if test="${carrier.code == segment.flight.carrier }">
+									<td><c:out value="${carrier.name}" /></td>
+									<c:set var="tripopt" value="${tripopt },${carrier.name }" />
+								</c:if>
+							</c:forEach>
+							<td><c:out value="${segment.flight.number}" /></td>
+							<c:set var="tripopt" value="${tripopt},${segment.flight.number}" />
+							<c:forEach items="${segment.leg}" var="leg" varStatus="loop">
+								<td><c:out value="${leg.origin}" /></td>
+								<td><c:out value="${leg.destination}" /></td>
+								<td><c:out value="${leg.departureTime}" /></td>
+								<td><c:out value="${leg.arrivalTime}" /></td>
+								<c:set var="tripopt"
+									value="${tripopt},${leg.origin},${leg.destination },${leg.departureTime },${leg.arrivalTime }" />
+							</c:forEach>
+							<td><c:out value="${segment.duration}" /></td>
+							
+							<!-- <td><c:out value="${slice.duration}" /></td> -->
+							<!-- <td><c:out value="${segment.bookingCodeCount}" /></td> -->
+							
+							<c:set var="tripopt" value="${tripopt},${segment.duration }" />
+						</tr>
+
+					</c:forEach>
+				</c:forEach>
+				<tr>
+
+					<c:forEach items="${tripOption.pricing}" var="pricing1" varStatus="loop"> 
+						<td><c:out value="Fare ${pricing1.saleFareTotal}" /></td>
+						<td><c:out value="Tax ${pricing1.saleTaxTotal}" /></td>
+						<td><c:out value="Per Tic ${pricing1.saleTotal}" /></td>
+					</c:forEach>
+
+					<td><c:out value="Total Cost ${tripOption.saleTotal}" /></td>
+
+					<td colspan="4"
+						style="text-align: center; backgroud-color: blue; color: white">
+						<script type="text/javascript">
+				
+							function setBookingInfo(bookingInfo){
+									alert(bookingInfo);
+									document.getElementById('bookingInfo').value = (bookingInfo);
+							}
+						</script> <input onclick="setBookingInfo('<c:out value='${tripopt}' />');"
+						class="search" type="submit" value="Book" />
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
 	</form>
 </body>
 </html>

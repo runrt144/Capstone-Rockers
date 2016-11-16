@@ -37,13 +37,14 @@ public class SearchServlet extends HttpServlet {
 		 PrintWriter out = response.getWriter();
 		 String trip = request.getParameter("trip");
 		 String from = request.getParameter("from");
-		 String to = request.getParameter("to");
+		 String to   = request.getParameter("to");
 		 String depDate = request.getParameter("depDate");
 		 String retDate = request.getParameter("retDate");
 		 String adult = request.getParameter("adult");
 		 String child = request.getParameter("child");
 		 String infant = request.getParameter("infant");
 	
+		 request.getSession();
 		 Search search = new Search(trip, from, to , depDate, retDate, adult, child, infant);
 		 System.out.println("Search is : " +search);
 		 try {	
