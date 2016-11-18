@@ -29,13 +29,14 @@ public class LoginService {
             tx.begin();
             Query query = session.createQuery("from User where email='"+email+"'");
             user = (User)query.uniqueResult();
-            tx.commit();
+            //tx.commit();
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
             }
             e.printStackTrace();
         } finally {
+            tx.commit();
             session.close();
         }
         return user;
@@ -49,13 +50,14 @@ public class LoginService {
             tx = session.getTransaction();
             tx.begin();
             list = session.createQuery("from registration").list();                        
-            tx.commit();
+            //tx.commit();
         } catch (Exception e) {
             if (tx != null) {
                 tx.rollback();
             }
             e.printStackTrace();
         } finally {
+            tx.commit();
             session.close();
         }
         return list;
