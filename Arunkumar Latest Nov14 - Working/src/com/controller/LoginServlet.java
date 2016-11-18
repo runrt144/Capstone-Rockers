@@ -11,6 +11,9 @@ import com.service.LoginService;
 
 
 public class LoginServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -21,8 +24,8 @@ public class LoginServlet extends HttpServlet {
 	 boolean result = loginService.authenticateUser(email, password);
 	 User user = loginService.getUserByEmail(email);
 	 if(result == true){
-		 request.getSession().setAttribute("user", user);		
-		 response.sendRedirect("loginhomepage.html");
+		 request.getSession().setAttribute("email", email);		
+		 response.sendRedirect("loginhomepage.jsp");
 	 }
 	 else{
 		 response.sendRedirect("error.html");

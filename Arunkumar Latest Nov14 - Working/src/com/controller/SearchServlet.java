@@ -44,9 +44,8 @@ public class SearchServlet extends HttpServlet {
 		 String child = request.getParameter("child");
 		 String infant = request.getParameter("infant");
 	
-		 request.getSession();
 		 Search search = new Search(trip, from, to , depDate, retDate, adult, child, infant);
-		 System.out.println("Search is : " +search);
+		 //System.out.println("Search is : " +search);
 		 try {	
 			 SearchService seachService = new SearchService();
 			 TripSearch result = seachService.search(search);

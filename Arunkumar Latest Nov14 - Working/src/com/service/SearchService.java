@@ -53,7 +53,7 @@ public class SearchService extends HttpServlet {
 					+ search.getInfant() + ",\"infantInSeatCount\": 0,\"childCount\": " + search.getChild()
 					+ ",\"seniorCount\": 0}, \"solutions\": 10, \"refundable\": false }}";
 
-		System.out.println("reguest Json : " + requestJson);
+		//System.out.println("reguest Json : " + requestJson);
 
 		HttpEntity<String> entity = new HttpEntity<String>(requestJson, headers);
 

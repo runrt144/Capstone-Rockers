@@ -18,7 +18,7 @@
 <title>SearchFlights</title>
 <style>
 body {
-	margin-left: 50px; 
+	margin-left: 50px;
 	background-color: lightblue;
 	-background: url("images/h5.jpg") no-repeat center center fixed; -
 	-background-size: cover;
@@ -61,8 +61,10 @@ tr:nth-child(even) {
 			align="middle" />
 	</div>
 	<br>
-	<h1><u>Search Flight Results</u></h1>
-	<form align="left" class="book" method="post" action="bookingContact.html">
+	<h1>
+		<u>Search Flight Results</u>
+	</h1>
+	<form align="left" class="book" method="post" action="ContactServlet">
 		<input type="hidden" name="bookingInfo" id="bookingInfo" />
 		<table style="width: 100%">
 			<tr>
@@ -78,6 +80,10 @@ tr:nth-child(even) {
 				var="tripOption" varStatus="loop">
 
 				<c:set var="tripopt" value="" />
+				<c:set var="tripoptFlight" value="" />
+				<c:set var="tripoptFomTo" value="" />
+				<c:set var="tripoptDate" value="" />
+				<c:set var="tripoptDur" value="" />
 				<c:forEach items="${tripOption.slice}" var="slice" varStatus="loop">
 
 					<c:forEach items="${slice.segment}" var="segment" varStatus="loop">
@@ -86,32 +92,46 @@ tr:nth-child(even) {
 								var="carrier" varStatus="loop">
 								<c:if test="${carrier.code == segment.flight.carrier }">
 									<td><c:out value="${carrier.name}" /></td>
-									<c:set var="tripopt" value="${tripopt },${carrier.name }" />
+									<c:set var="tripopt"
+										value=" ${tripopt} ${carrier.name }" />
+									<c:set var="tripoptFlight"
+										value=" ${tripoptFlight} ${carrier.name }" />
 								</c:if>
 							</c:forEach>
 							<td><c:out value="${segment.flight.number}" /></td>
-							<c:set var="tripopt" value="${tripopt},${segment.flight.number}" />
+							<c:set var="tripopt"
+								value="${tripopt} ; Number:  ${segment.flight.number} \n " />
+							<c:set var="tripoptFlight"
+								value="${tripoptFlight} Number ${segment.flight.number} \n " />
 							<c:forEach items="${segment.leg}" var="leg" varStatus="loop">
 								<td><c:out value="${leg.origin}" /></td>
 								<td><c:out value="${leg.destination}" /></td>
 								<td><c:out value="${leg.departureTime}" /></td>
 								<td><c:out value="${leg.arrivalTime}" /></td>
 								<c:set var="tripopt"
-									value="${tripopt},${leg.origin},${leg.destination },${leg.departureTime },${leg.arrivalTime }" />
+									value=" ${tripopt} ; From:${leg.origin} ; To: ${leg.destination } \n  ; Dep Date: ${leg.departureTime } ; Arr Date: ${leg.arrivalTime }" />
+								<c:set var="tripoptFomTo"
+									value=" ${tripoptFomTo} ; From:  ${leg.origin} ; To:  ${leg.destination } \n " />
+								<c:set var="tripoptDate"
+									value=" ${tripoptDate} ; Dep Date:  ${leg.departureTime } ; Arr Date:  ${leg.arrivalTime }" />
 							</c:forEach>
 							<td><c:out value="${segment.duration}" /></td>
-							
+
 							<!-- <td><c:out value="${slice.duration}" /></td> -->
 							<!-- <td><c:out value="${segment.bookingCodeCount}" /></td> -->
-							
-							<c:set var="tripopt" value="${tripopt},${segment.duration }" />
+
+							<c:set var="tripopt"
+								value="${tripopt} ; Travel Time:  ${segment.duration} \n" />
+							<c:set var="tripoptDur"
+								value="${tripoptDur} Travel Time: ${segment.duration} \n" />
 						</tr>
 
 					</c:forEach>
 				</c:forEach>
 				<tr>
 
-					<c:forEach items="${tripOption.pricing}" var="pricing1" varStatus="loop"> 
+					<c:forEach items="${tripOption.pricing}" var="pricing1"
+						varStatus="loop">
 						<td><c:out value="Fare ${pricing1.saleFareTotal}" /></td>
 						<td><c:out value="Tax ${pricing1.saleTaxTotal}" /></td>
 						<td><c:out value="Per Tic ${pricing1.saleTotal}" /></td>
