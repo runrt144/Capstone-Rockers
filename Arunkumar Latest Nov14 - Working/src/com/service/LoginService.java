@@ -57,7 +57,8 @@ public class LoginService {
             }
             e.printStackTrace();
         } finally {
-            tx.commit();
+            if(!tx.wasCommitted)
+                    tx.commit;
             session.close();
         }
         return list;
